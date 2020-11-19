@@ -42,6 +42,8 @@ type PackageInfo struct {
 	Compatibility string `json:"compatibility,omitempty"`
 	// Indicates whether the package generates input/output classes.
 	UsesIOClasses bool `json:"usesIOClasses,omitempty"`
+	// Indicates whether the pulumiplugin.json file should be generated.
+	EmitPulumiPluginFile bool `json:"emitPulumiPluginFile,omitempty"`
 }
 
 // Importer implements schema.Language for Python.
