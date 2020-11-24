@@ -3,6 +3,9 @@ CHANGELOG
 
 ## HEAD (Unreleased)
 
+- Correctly rename `Pulumi.*.yaml` stack files during a rename that includes an
+  organization in its name [#5812](https://github.com/pulumi/pulumi/pull/5812).
+
 - Respect `PULUMI_PYTHON_CMD` in scripts.
   [#5782](https://github.com/pulumi/pulumi/pull/5782)
 
