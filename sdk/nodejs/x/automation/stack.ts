@@ -109,10 +109,9 @@ export class Stack {
      * @param opts Options to customize the behavior of the update.
      */
     async up(opts?: UpOptions): Promise<UpResult> {
-        const args = ["up", "--yes", "--skip-preview"];
+        const args = ["up", "--yes", "--skip-preview", "--stack", this.name];
         let kind = execKind.local;
         let program = this.workspace.program;
-        await this.workspace.selectStack(this.name);
 
         if (opts) {
             if (opts.program) {
@@ -190,10 +189,9 @@ export class Stack {
      */
     async preview(opts?: PreviewOptions): Promise<PreviewResult> {
         // TODO JSON
-        const args = ["preview"];
+        const args = ["preview", "--stack", this.name];
         let kind = execKind.local;
         let program = this.workspace.program;
-        await this.workspace.selectStack(this.name);
 
         if (opts) {
             if (opts.program) {
@@ -267,8 +265,7 @@ export class Stack {
      * @param opts Options to customize the behavior of the refresh.
      */
     async refresh(opts?: RefreshOptions): Promise<RefreshResult> {
-        const args = ["refresh", "--yes", "--skip-preview"];
-        await this.workspace.selectStack(this.name);
+        const args = ["refresh", "--yes", "--skip-preview", "--stack", this.name];
 
         if (opts) {
             if (opts.message) {
@@ -302,8 +299,7 @@ export class Stack {
      * @param opts Options to customize the behavior of the destroy.
      */
     async destroy(opts?: DestroyOptions): Promise<DestroyResult> {
-        const args = ["destroy", "--yes", "--skip-preview"];
-        await this.workspace.selectStack(this.name);
+        const args = ["destroy", "--yes", "--skip-preview", "--stack", this.name];
 
         if (opts) {
             if (opts.message) {
@@ -388,10 +384,9 @@ export class Stack {
      * Gets the current set of Stack outputs from the last Stack.up().
      */
     async outputs(): Promise<OutputMap> {
-        await this.workspace.selectStack(this.name);
         // TODO: do this in parallel after this is fixed https://github.com/pulumi/pulumi/issues/3877
-        const maskedResult = await this.runPulumiCmd(["stack", "output", "--json"]);
-        const plaintextResult = await this.runPulumiCmd(["stack", "output", "--json", "--show-secrets"]);
+        const maskedResult = await this.runPulumiCmd(["stack", "output", "--json", "--stack", this.name]);
+        const plaintextResult = await this.runPulumiCmd(["stack", "output", "--json", "--show-secrets", "--stack", this.name]);
         const maskedOuts = JSON.parse(maskedResult.stdout);
         const plaintextOuts = JSON.parse(plaintextResult.stdout);
         const outputs: OutputMap = {};
